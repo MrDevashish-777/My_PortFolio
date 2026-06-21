@@ -36,10 +36,10 @@ export default function Hero() {
           <div className="space-y-4">
             <motion.h1 
               variants={itemVariants}
-              className="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter"
+              className="text-5xl lg:text-6xl xl:text-7xl font-extrabold lg:tracking-tight xl:tracking-tighter"
             >
               <span className="block text-gradient">{siteConfig.shortName}</span>
-              <span className="block text-slate-800 dark:text-slate-100 mt-2">Pillay</span>
+              <span className="block text-slate-900 dark:text-white mt-2">Pillay</span>
             </motion.h1>
             
             <motion.div variants={itemVariants}>
@@ -88,11 +88,11 @@ export default function Hero() {
           </motion.div>
 
           {/* Stats Section */}
-          <motion.div variants={itemVariants} className="mt-12 grid grid-cols-3 gap-6 pt-8 border-t border-slate-200 dark:border-slate-800">
+          <motion.div variants={itemVariants} className="mt-12 grid grid-cols-3 gap-6 p-6 sm:p-8 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/20 dark:shadow-none w-full max-w-2xl">
             {heroData.stats.map((stat, index) => (
               <div key={index} className="text-center sm:text-left">
-                <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-1">{stat.value}</div>
-                <div className="text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label}</div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-2">{stat.value}</div>
+                <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider">{stat.label}</div>
               </div>
             ))}
           </motion.div>
@@ -126,29 +126,6 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.8 }}
-      >
-        <div className="w-6 h-10 border-2 border-slate-300 dark:border-slate-600 rounded-full flex justify-center p-1">
-          <motion.div 
-            className="w-1.5 h-1.5 bg-slate-400 dark:bg-slate-500 rounded-full"
-            animate={{ 
-              y: [0, 16, 0],
-              opacity: [1, 0, 1] 
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        </div>
-      </motion.div>
     </main>
   );
 }

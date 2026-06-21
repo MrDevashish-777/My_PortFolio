@@ -33,7 +33,7 @@ export default function FloatingActionButton() {
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 left-6 z-50">
       {/* Menu Items */}
       <AnimatePresence>
         {isOpen && (
@@ -41,7 +41,7 @@ export default function FloatingActionButton() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute bottom-16 right-0 space-y-3"
+            className="absolute bottom-16 left-0 space-y-3"
           >
             {menuItems.map((item, index) => (
               <motion.a

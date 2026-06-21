@@ -1,45 +1,53 @@
 [
   {
-    "title": "Portfolio Website",
-    "description": "Modern, responsive portfolio website built with Astro, React, and Tailwind CSS featuring advanced animations and AI-powered chatbot.",
-    "tech": ["Astro", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    "title": "Crypto Trading Bot",
+    "description": "Production framework with Binance real-time ingestion, 10+ indicators, 7 pluggable strategy modules, and signal engine with TP/SL risk controls. Containerized with Docker and Kubernetes.",
+    "tech": ["Python", "FastAPI", "PostgreSQL", "Redis", "Docker", "Kubernetes"],
     "link": "#",
     "featured": true
   },
   {
-    "title": "BioSecure",
-    "description": "Biometric security system with CFT",
-    "tech": ["React Native", "Firebase", "ResNet-50"],
-    "link": "https://github.com/MrDevashish-777/BioSecure"
+    "title": "Planitt Market Analyzer",
+    "description": "AI-driven financial intelligence platform with conversational interface powered by local LLaMA 3. Features live TradingView charts, AI news sentiment, and stock screeners.",
+    "tech": ["Next.js 15", "TypeScript", "LLaMA 3", "PostgreSQL", "Drizzle ORM"],
+    "link": "#",
+    "featured": true
   },
   {
-    "title": "E-Commerce Platform",
-    "description": "Full-stack e-commerce solution with payment integration, inventory management, and real-time analytics.",
-    "tech": ["Next.js", "Node.js", "MongoDB", "Stripe", "Socket.io"],
+    "title": "Indian Trader v4.0",
+    "description": "NSE/BSE algorithmic suite featuring Smart Money Concepts (FVGs, order blocks), multi-timeframe signals, and Transformer ML candle prediction models.",
+    "tech": ["Python", "Dash", "FastAPI", "Transformers", "scikit-learn"],
+    "link": "#",
+    "featured": true
+  },
+  {
+    "title": "P-L-Viewer",
+    "description": "Lightweight CSV-to-Firestore sync pipeline with SHA-256 row hashing, batched upserts, and an Expo React Native mobile viewer for portfolio inspection.",
+    "tech": ["Node.js", "Firestore", "React Native (Expo)", "TypeScript"],
     "link": "#"
   },
   {
-    "title": "Task Management App",
-    "description": "Collaborative task management application with real-time updates, file sharing, and team communication features.",
-    "tech": ["React", "Express.js", "PostgreSQL", "Redis", "WebSocket"],
+    "title": "Bhav App",
+    "description": "Cross-platform fintech app with in-app purchases, Razorpay integration, real-time socket updates, and EAS build pipelines.",
+    "tech": ["React Native", "Zustand", "Socket.IO", "Razorpay", "Apple IAP"],
     "link": "#"
   },
   {
-    "title": "Down The Hell",
-    "description": "Pygame obstacle adventure game",
-    "tech": ["Python", "Pygame"],
-    "link": "https://github.com/MrDevashish-777/Down-The-Hell"
+    "title": "QRDine",
+    "description": "QR-based cafe ordering platform with 5 role surfaces, real-time order broadcasting via Socket.IO, CSV bulk imports, and Cloudinary media uploads.",
+    "tech": ["Next.js 16", "Express.js", "MongoDB", "Socket.IO"],
+    "link": "#"
   },
   {
-    "title": "CodeFlex",
-    "description": "Event management website for IEEE",
-    "tech": ["React.js", "Node.js", "MongoDB"],
+    "title": "Sakura Dream (Visual Novel)",
+    "description": "Browser-based anime visual novel with 9 branching endings, typewriter text effects, dynamic character routes, and a JSON-configurable story system.",
+    "tech": ["Phaser 3", "Vite", "JavaScript"],
+    "link": "#"
+  },
+  {
+    "title": "CodeFlex (IEEE SBJITMR)",
+    "description": "Event management platform for the IEEE SBJITMR chapter with authentication, dynamic content loading, and event registration flows.",
+    "tech": ["React", "JavaScript", "Node.js", "MongoDB"],
     "link": "https://github.com/MrDevashish-777/CodeFlex"
-  },
-  {
-    "title": "GitHub Contributions",
-    "description": "Active repositories and pull requests",
-    "tech": ["GitHub", "Open Source"],
-    "link": "https://github.com/MrDevashish-777"
   }
 ]

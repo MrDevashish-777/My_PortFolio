@@ -1,7 +1,9 @@
 {
-  "Frontend": ["React.js", "JavaScript", "HTML5", "CSS3", "Tailwind CSS"],
-  "Backend": ["Node.js", "Express.js", "Firebase", "MongoDB", "Supabase"],
-  "App Development": ["React Native", "API Integration", "Authentication"],
-  "Open Source & Soft Skills": ["Git", "GitHub", "Collaboration", "Problem-Solving", "Teamwork", "Communication", "Leadership"]
+  "Languages": ["Python", "JavaScript (ES6+)", "TypeScript"],
+  "Frontend": ["React.js", "Next.js", "Tailwind CSS", "Expo (React Native)", "Framer Motion", "Radix UI", "HTML5", "CSS3", "Phaser 3"],
+  "Backend": ["Node.js", "Express.js", "FastAPI", "NestJS", "GraphQL", "WebSockets", "Socket.IO", "REST APIs"],
+  "Databases": ["PostgreSQL", "MongoDB", "Redis", "Supabase", "Drizzle ORM", "SQLAlchemy", "Alembic", "Firestore", "Firebase"],
+  "AI & ML": ["Transformer Models", "LLaMA 3 (Ollama)", "Vercel AI SDK", "scikit-learn", "DeepFace", "ResNet50", "HOG"],
+  "DevOps & Tools": ["Docker", "Kubernetes", "Git & GitHub", "Vercel", "Render", "EAS (Expo)", "Netlify", "Cloudinary", "Google Drive API"],
+  "Architecture & Security": ["JWT Auth", "RBAC", "AES-256 Encryption", "SHA-256 Hashing", "TDD (pytest/Jest)", "mypy/ruff/black", "Razorpay", "Apple IAP", "Stripe"]
 }
-  

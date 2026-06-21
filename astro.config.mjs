@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,23 +16,12 @@ export default defineConfig({
     icon(),
     react(),
   ],
-  adapter: vercel(),
+  adapter: vercel({
+    imageService: true,
+  }),
   output: 'server',
   vite: {
     plugins: [tailwindcss()],
-    build: {
-      // Improve build performance
-      cssCodeSplit: true,
-      minify: 'terser',
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            react: ['react', 'react-dom'],
-            framer: ['framer-motion'],
-          },
-        },
-      },
-    },
   },
   compressHTML: true,
 });

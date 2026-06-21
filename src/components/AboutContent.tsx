@@ -10,19 +10,24 @@ const achievements = [
 
 const timeline = [
   {
+    year: "2026",
+    title: "IEEE Publication",
+    description: "Published a peer-reviewed paper on Hybrid Biometric Authentication in IEEE Xplore, achieving 99.99% accuracy."
+  },
+  {
+    year: "2025",
+    title: "Fintech & AI Engineering",
+    description: "Architecting a production crypto trading bot and an AI stock intelligence platform at Planitt Solutions."
+  },
+  {
     year: "2024",
-    title: "Advanced AI Projects",
-    description: "Working on cutting-edge biometric authentication systems and forensic technology applications."
+    title: "Algorithm Certification",
+    description: "Completed the rigorous Design and Analysis of Algorithms certification backed by IIT through NPTEL."
   },
   {
     year: "2023",
-    title: "Full-Stack Development",
-    description: "Mastered modern web development stack including React, Node.js, and cloud technologies."
-  },
-  {
-    year: "2022",
-    title: "Computer Science Journey",
-    description: "Started my Computer Science and Engineering degree, focusing on AI and software development."
+    title: "Technical Leadership",
+    description: "Served as Technical Head for the IEEE SBJITMR Student Chapter, leading technical workshops and events."
   }
 ];
 
@@ -69,18 +74,21 @@ export default function AboutContent() {
               Hi, I'm <span className="text-gradient">Devashish</span>
             </h2>
             <p className="text-lg leading-relaxed text-slate-600 dark:text-slate-300">
-              Aspiring B.Tech (CSE) student at SBJITMR, Nagpur with strong full-stack development skills. Passionate about building responsive applications, creative problem-solving, and contributing to impactful projects. Experienced in UI/UX, authentication systems, and working within agile teams.
+              I am a Final-year B.Tech CSE student (GPA 8.58/10) and an IEEE-published researcher with production experience building fintech and AI systems. I specialize across the full stack—Python, TypeScript, React, and Node.js—with a track record of shipping real deployments, not just demos.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-3">Skills</h3>
-              <p className="text-slate-600 dark:text-slate-400">React.js, Node.js, Express.js, Tailwind CSS, MongoDB, Firebase</p>
+              <h3 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-3">Core Expertise</h3>
+              <p className="text-slate-600 dark:text-slate-400">Trading Bots, AI Integration (LLaMA), Full-Stack Systems, & WebSockets.</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-3">Education</h3>
-              <p className="text-slate-600 dark:text-slate-400">B.Tech CSE – SBJITMR, Nagpur (86.60%)</p>
+              <p className="text-slate-600 dark:text-slate-400 font-medium">B.Tech CSE (2022-26)</p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">SBJITMR, Nagpur • 8.58 / 10</p>
+              <p className="text-slate-600 dark:text-slate-400 font-medium mt-2">HSC (Class XII)</p>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">Maharashtra Board • 77.5%</p>
             </div>
           </div>
         </motion.div>

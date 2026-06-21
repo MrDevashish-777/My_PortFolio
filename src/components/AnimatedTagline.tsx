@@ -78,12 +78,12 @@ export default function AnimatedTagline() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden text-left"
     >
       {/* Main Tagline */}
       <motion.div 
         variants={textVariants}
-        className="text-2xl md:text-3xl font-bold text-center mb-4"
+        className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight"
       >
         <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_200%]">
           Passionate about Technology
@@ -93,9 +93,9 @@ export default function AnimatedTagline() {
       {/* Animated Role Switcher */}
       <motion.div 
         variants={textVariants}
-        className="text-lg md:text-xl font-semibold text-center h-8 relative"
+        className="text-xl md:text-2xl font-bold h-10 relative flex items-center"
       >
-        <span className="text-gray-600 mr-2">I'm a</span>
+        <span className="text-slate-700 dark:text-slate-300 mr-3">I'm a</span>
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={currentRole}
@@ -103,7 +103,7 @@ export default function AnimatedTagline() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold"
+            className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent font-extrabold"
             aria-live="polite"
           >
             {roles[currentRole]}
@@ -114,14 +114,14 @@ export default function AnimatedTagline() {
       {/* Decorative Elements */}
       <motion.div 
         variants={textVariants}
-        className="flex justify-center items-center mt-4 space-x-2"
+        className="flex items-center justify-start mt-6 space-x-3"
       >
         {[...Array(3)].map((_, i) => (
           <motion.div
             key={i}
-            className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+            className="w-2.5 h-2.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
             animate={{
-              scale: [1, 1.2, 1],
+              scale: [1, 1.3, 1],
               opacity: [0.5, 1, 0.5]
             }}
             transition={{
@@ -135,9 +135,8 @@ export default function AnimatedTagline() {
 
       {/* Background Glow Effect */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 rounded-2xl blur-xl -z-10"
+        className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-transparent rounded-2xl blur-xl -z-10"
         animate={{
-          scale: [1, 1.05, 1],
           opacity: [0.3, 0.6, 0.3]
         }}
         transition={{

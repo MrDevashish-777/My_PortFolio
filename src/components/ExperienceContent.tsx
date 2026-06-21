@@ -3,40 +3,47 @@ import { motion } from 'framer-motion';
 
 const experiences = [
   {
-    role: "Full Stack Developer Intern",
-    company: "Tars Technologies",
-    period: "May 2025 – Jun 2025",
+    role: "Software Development Intern",
+    company: "Planitt Solutions Pvt. Ltd.",
+    period: "Jan 2025 – Present",
     type: "Internship",
     bullets: [
-      "Built and deployed full-stack apps using React (Vite), JavaScript, TailwindCSS, MongoDB, Firebase",
-      "Implemented responsive UI, auth flows, and real-time features",
-      "Collaborated with design & backend teams using agile workflows"
+      "Built a production crypto trading bot in Python (Binance WebSocket, FastAPI, PostgreSQL, Redis, Docker) with 7+ strategy plugins.",
+      "Developed Planitt Market Analyzer, an AI stock platform using Next.js 15, local LLaMA 3 inference, and TradingView.",
+      "Built Indian Trader v4.0 for NSE/BSE utilizing Transformer-based candle prediction and Smart Money Concepts.",
+      "Developed P-L-Viewer and Bhav App (Expo React Native) integrating Razorpay, Socket.IO, and Google Drive PDFs."
     ]
   },
   {
     role: "Live Project Member",
     company: "Crypto Forensic Technology",
-    period: "Aug 2024 – Nov 2025",
+    period: "Aug 2024 – Present",
     type: "Project",
     bullets: [
-      "Built & maintained responsive web apps",
-      "Managed website via CPanel",
-      "Developed biometric security & forensic systems"
+      "Contributing to BioSecure, a biometric security system using React and Material-UI.",
+      "Developing secure authentication flows and handling real-time data integration for forensic applications."
     ]
   },
   {
-    role: "Web Dev Intern",
-    company: "HOTIT Institute",
-    period: "Jun 2024",
+    role: "Full-Stack Web Developer Intern",
+    company: "TARS Technologies",
+    period: "May 2024 – Jun 2024",
     type: "Internship",
-    bullets: ["Developed full website with HTML/CSS/JS/PHP & MySQL"]
+    bullets: [
+      "Designed REST and GraphQL APIs with JWT auth and role-based authorization (Passport.js).",
+      "Built React UI components and managed MongoDB and PostgreSQL databases.",
+      "Authored Jest unit and integration testing pipelines."
+    ]
   },
   {
     role: "Website Manager",
     company: "Jain International School",
     period: "Aug 2023 – Apr 2024",
     type: "Role",
-    bullets: ["Managed official website, improved UI/UX, SEO, QA, bug fixes"]
+    bullets: [
+      "Managed the official school website via cPanel.",
+      "Delivered UI/UX improvements and rapid feature additions on request."
+    ]
   }
 ];
 
