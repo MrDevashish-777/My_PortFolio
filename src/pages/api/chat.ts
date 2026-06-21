@@ -10,9 +10,10 @@ const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 5;
 
 // Fallback to environment variable for Groq API key
-const GROQ_API_KEY = import.meta.env.GROQ_API_KEY || '';
+// Use process.env for runtime Vercel variables, import.meta.env for local dev
+const GROQ_API_KEY = (typeof process !== 'undefined' ? process.env.GROQ_API_KEY : '') || import.meta.env.GROQ_API_KEY || '';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL_NAME = 'llama3-8b-8192'; // A fast and capable Groq model
+const MODEL_NAME = 'llama-3.1-8b-instant'; // A fast and capable Groq model
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
@@ -84,8 +85,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
     
     if (!groqResponse.ok) {
-      console.error(`Groq API error: ${groqResponse.status}`);
-      throw new Error(`Groq API error: ${groqResponse.statusText}`);
+      const errText = await groqResponse.text();
+      console.error(`Groq API error: ${groqResponse.status} - ${errText}`);
+      throw new Error(`Groq API error: ${groqResponse.statusText} - ${errText}`);
     }
     
     const data = await groqResponse.json();
