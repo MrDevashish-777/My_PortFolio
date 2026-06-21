@@ -5,122 +5,92 @@ import Navbar from "@/components/navbar/navbar.astro";
 import CustomCursor from "@/components/CustomCursor";
 import PageTransition, { ScrollProgress } from "@/components/PageTransition";
 import GoUpButton from "@/components/GoUpButton";
+import { siteConfig } from "@/data/config";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
 import "../styles/global.css";
 
 export interface Props {
-  title: string;
+  title?: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || siteConfig.url).toString();
 
 const resolvedImageWithDomain = new URL(
   "/opengraph.jpg",
-  Astro.site
+  Astro.site || siteConfig.url
 ).toString();
 
 const { title } = Astro.props;
 
 const makeTitle = title
-  ? title + " | " + "T. Devashish Pillay"
-  : "T. Devashish Pillay - AI Enthusiast & Full-Stack Developer";
+  ? `${title} | ${siteConfig.name}`
+  : `${siteConfig.name} - ${siteConfig.title}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" className="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
     <SEO
       title={makeTitle}
-      description="T. Devashish Pillay - Computer Science student passionate about AI, full-stack development, and innovative tech solutions. Specializing in biometric systems, web development, and machine learning."
+      description={siteConfig.description}
       canonical={canonicalURL}
       twitter={{
-        creator: "@devashish_pillay",
-        site: "@devashish_pillay",
+        creator: siteConfig.twitter,
+        site: siteConfig.twitter,
         card: "summary_large_image",
       }}
       openGraph={{
         basic: {
           url: canonicalURL,
           type: "website",
-          title: `T. Devashish Pillay - AI Enthusiast & Developer`,
+          title: `${siteConfig.name} - ${siteConfig.title}`,
           image: resolvedImageWithDomain,
         },
         image: {
-          alt: "T. Devashish Pillay Portfolio",
+          alt: `${siteConfig.name} Portfolio`,
         },
       }}
     />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": siteConfig.name,
+      "url": siteConfig.url,
+      "jobTitle": siteConfig.title,
+      "sameAs": [
+        siteConfig.github,
+        siteConfig.linkedin
+      ]
+    })} />
   </head>
-  <body>
+  <body className="antialiased selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-100">
     <CustomCursor client:load />
+    
     <!-- Scroll Progress Indicator -->
     <ScrollProgress client:load />
+    
     <Navbar />
+    
     <PageTransition client:load>
       <slot />
     </PageTransition>
+    
     <Footer />
+    
     <GoUpButton client:load />
-    <!-- Floating Action Button -->
-    <div id="fab-container"></div>
+
     <style is:global>
       /* Improve Page speed */
-      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
       img {
         content-visibility: auto;
       }
     </style>
-    <script>
-      // Smooth scroll for anchor links
-      function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href === '#') return;
-            
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-              target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }
-          });
-        });
-      }
-      
-      // Initialize on page load
-      document.addEventListener('DOMContentLoaded', function() {
-        initSmoothScroll();
-        
-        // Add intersection observer for animations
-        const observerOptions = {
-          threshold: 0.1,
-          rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.animationPlayState = 'running';
-            }
-          });
-        }, observerOptions);
-        
-        // Observe all animated elements
-        document.querySelectorAll('.animate-slide-up, .animate-scale-in, .animate-float').forEach(el => {
-          el.style.animationPlayState = 'paused';
-          observer.observe(el);
-        });
-      });
-    </script>
   </body>
 </html>

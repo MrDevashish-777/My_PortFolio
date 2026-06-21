@@ -2,55 +2,104 @@ export const prerender = false;
 
 import type { APIRoute } from 'astro';
 
-// Get environment variables with fallbacks
-const OLLAMA_API_URL = import.meta.env.OLLAMA_API_URL || 'http://localhost:11434/api/generate';
-const OLLAMA_MODEL = import.meta.env.OLLAMA_MODEL || 'llama2:7b';
+// Simple in-memory rate limiting (IP -> timestamps)
+// Note: In a serverless environment like Vercel, memory is not shared across instances.
+// This is a basic protection mechanism. For strict rate limiting, use Redis.
+const rateLimitCache = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 5;
 
-export const POST: APIRoute = async ({ request }) => {
+// Fallback to environment variable for Groq API key
+const GROQ_API_KEY = import.meta.env.GROQ_API_KEY || '';
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const MODEL_NAME = 'llama3-8b-8192'; // A fast and capable Groq model
+
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
-    const body = await request.json();
+    // 1. Rate Limiting Check
+    const ip = clientAddress || 'unknown';
+    const now = Date.now();
+    const timestamps = rateLimitCache.get(ip) || [];
+    const recentRequests = timestamps.filter(t => now - t < RATE_LIMIT_WINDOW);
     
-    // Accepts either { message: string } or { messages: [{ content: string }] }
-    let userInput = '';
-    if (body.message) {
-      userInput = body.message;
-    } else if (body.messages && Array.isArray(body.messages)) {
-      userInput = body.messages[body.messages.length - 1]?.content || '';
-    } else {
+    if (recentRequests.length >= MAX_REQUESTS_PER_WINDOW) {
       return new Response(
-        JSON.stringify({ response: 'Invalid message format.' }), 
+        JSON.stringify({ response: 'Too many requests. Please try again in a minute.' }), 
+        { status: 429, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    recentRequests.push(now);
+    rateLimitCache.set(ip, recentRequests);
+
+    // 2. Input Validation
+    const body = await request.json();
+    let userInput = '';
+    
+    if (body.message && typeof body.message === 'string') {
+      userInput = body.message.trim();
+    } else if (body.messages && Array.isArray(body.messages)) {
+      const lastMessage = body.messages[body.messages.length - 1];
+      if (lastMessage && typeof lastMessage.content === 'string') {
+        userInput = lastMessage.content.trim();
+      }
+    }
+    
+    if (!userInput || userInput.length > 1000) {
+      return new Response(
+        JSON.stringify({ response: 'Invalid or overly long message.' }), 
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // Send the user input to Ollama
-    const ollamaResponse = await fetch(OLLAMA_API_URL, {
+    if (!GROQ_API_KEY) {
+      return new Response(
+        JSON.stringify({ response: 'Chatbot is currently disabled (Missing API Key).' }), 
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // 3. Groq API Call
+    const groqResponse = await fetch(GROQ_API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_API_KEY}`
+      },
       body: JSON.stringify({
-        model: OLLAMA_MODEL,
-        prompt: userInput,
-        stream: false
+        model: MODEL_NAME,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are Devashish Pillay\'s personal AI assistant on his portfolio website. You are helpful, concise, and professional.'
+          },
+          {
+            role: 'user',
+            content: userInput
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 500,
       })
     });
     
-    if (!ollamaResponse.ok) {
-      throw new Error(`Ollama API error: ${ollamaResponse.status}`);
+    if (!groqResponse.ok) {
+      console.error(`Groq API error: ${groqResponse.status}`);
+      throw new Error(`Groq API error: ${groqResponse.statusText}`);
     }
     
-    const data = await ollamaResponse.json();
+    const data = await groqResponse.json();
+    const botReply = data.choices?.[0]?.message?.content || 'I did not understand that.';
     
     return new Response(
-      JSON.stringify({ response: data.response }), 
+      JSON.stringify({ response: botReply }), 
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (err: any) {
-    console.error('Ollama Chatbot Error:', err);
-    
+    console.error('Chatbot API Error:', err);
     return new Response(
       JSON.stringify({ 
-        response: '⚠️ Something went wrong with the assistant. Please try again later.',
-        error: err.message 
+        response: '⚠️ Something went wrong with the assistant. Please try again later.'
       }), 
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );

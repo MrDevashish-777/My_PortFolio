@@ -1,9 +1,28 @@
 [
   {
+    "title": "Portfolio Website",
+    "description": "Modern, responsive portfolio website built with Astro, React, and Tailwind CSS featuring advanced animations and AI-powered chatbot.",
+    "tech": ["Astro", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    "link": "#",
+    "featured": true
+  },
+  {
     "title": "BioSecure",
     "description": "Biometric security system with CFT",
     "tech": ["React Native", "Firebase", "ResNet-50"],
     "link": "https://github.com/MrDevashish-777/BioSecure"
+  },
+  {
+    "title": "E-Commerce Platform",
+    "description": "Full-stack e-commerce solution with payment integration, inventory management, and real-time analytics.",
+    "tech": ["Next.js", "Node.js", "MongoDB", "Stripe", "Socket.io"],
+    "link": "#"
+  },
+  {
+    "title": "Task Management App",
+    "description": "Collaborative task management application with real-time updates, file sharing, and team communication features.",
+    "tech": ["React", "Express.js", "PostgreSQL", "Redis", "WebSocket"],
+    "link": "#"
   },
   {
     "title": "Down The Hell",

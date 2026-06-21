@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,6 +16,8 @@ export default defineConfig({
     icon(),
     react(),
   ],
+  adapter: vercel(),
+  output: 'server',
   vite: {
     plugins: [tailwindcss()],
     build: {
@@ -31,6 +34,5 @@ export default defineConfig({
       },
     },
   },
-  output: 'static', // or 'server' if you need SSR
   compressHTML: true,
 });

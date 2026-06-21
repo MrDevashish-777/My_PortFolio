@@ -1,66 +1,79 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
-const CustomCursor: React.FC = () => {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const trailingRef = useRef<HTMLDivElement>(null);
+export default function CustomCursor() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const cursor = cursorRef.current;
-    const trailing = trailingRef.current;
-    if (!cursor || !trailing) return;
-    // Don't initialize on touch-only devices
-    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: none)').matches) {
-      // show default cursor in this case
-      cursor.style.display = 'none';
-      trailing.style.display = 'none';
-      return;
-    }
+    // Hide on touch devices
+    if (window.matchMedia('(pointer: coarse)').matches) return;
 
-    let mouseX = 0, mouseY = 0;
-    let trailingX = 0, trailingY = 0;
-
-    const mainSize = 18; // matches CSS
-    const trailingSize = 36;
-
-    const moveCursor = (e: PointerEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      // center the cursor on pointer
-      cursor.style.transform = `translate3d(${mouseX - mainSize / 2}px, ${mouseY - mainSize / 2}px, 0)`;
-      // check hover target under pointer
-      const el = document.elementFromPoint(mouseX, mouseY) as HTMLElement | null;
-      const isInteractive = el && el.closest && el.closest('a, button, [role="button"], input, textarea, select, label');
-      if (isInteractive) {
-        cursor.classList.add('cursor-hover');
-        trailing.classList.add('cursor-hover');
-      } else {
-        cursor.classList.remove('cursor-hover');
-        trailing.classList.remove('cursor-hover');
-      }
+    const updateMousePosition = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      if (!isVisible) setIsVisible(true);
     };
 
-    const animateTrailing = () => {
-      // trailing follows with easing
-      trailingX += (mouseX - trailingX) * 0.15;
-      trailingY += (mouseY - trailingY) * 0.15;
-      trailing.style.transform = `translate3d(${trailingX - trailingSize / 2}px, ${trailingY - trailingSize / 2}px, 0)`;
-      requestAnimationFrame(animateTrailing);
+    const updateHoverState = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      // Check if the target or its parent is interactive
+      const isInteractive = target.closest('a, button, input, textarea, select, [role="button"]');
+      setIsHovering(!!isInteractive);
     };
 
-    document.addEventListener('pointermove', moveCursor);
-    animateTrailing();
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
+
+    window.addEventListener('mousemove', updateMousePosition);
+    window.addEventListener('mouseover', updateHoverState);
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mouseenter', handleMouseEnter);
 
     return () => {
-      document.removeEventListener('pointermove', moveCursor);
+      window.removeEventListener('mousemove', updateMousePosition);
+      window.removeEventListener('mouseover', updateHoverState);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, []);
+  }, [isVisible]);
+
+  if (!isVisible) return null;
 
   return (
     <>
-      <div ref={trailingRef} className="custom-cursor trailing"></div>
-      <div ref={cursorRef} className="custom-cursor main"></div>
+      {/* Main dot */}
+      <motion.div
+        className="fixed top-0 left-0 w-3 h-3 bg-indigo-500 rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        animate={{
+          x: mousePosition.x - 6,
+          y: mousePosition.y - 6,
+          scale: isHovering ? 0 : 1,
+          opacity: isHovering ? 0 : 1
+        }}
+        transition={{
+          type: "tween",
+          ease: "backOut",
+          duration: 0.1
+        }}
+      />
+      
+      {/* Outer ring */}
+      <motion.div
+        className="fixed top-0 left-0 w-8 h-8 border-2 border-indigo-400 rounded-full pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center"
+        animate={{
+          x: mousePosition.x - 16,
+          y: mousePosition.y - 16,
+          scale: isHovering ? 1.5 : 1,
+          backgroundColor: isHovering ? "rgba(99, 102, 241, 0.1)" : "rgba(99, 102, 241, 0)",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 150,
+          damping: 15,
+          mass: 0.5
+        }}
+      />
     </>
   );
-};
-
-export default CustomCursor;
+}
